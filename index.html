@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GradVault — Africa's Most Exclusive Graduate Talent</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --forest:    #1a3028;
+  --forest2:   #243d33;
+  --forest3:   #2e4f42;
+  --leaf:      #3d6b58;
+  --sage:      #7a9e8e;
+  --cream:     #f5f0e8;
+  --cream2:    #ede8df;
+  --cream3:    #e0d9ce;
+  --gold:      #c8a96e;
+  --gold2:     #dfc08a;
+  --gold-light:#f0e0b8;
+  --ink:       #1a1a18;
+  --muted:     #7a7870;
+  --border:    rgba(26,48,40,0.12);
+  --border2:   rgba(200,169,110,0.25);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
+
+/* ── CURSOR ── */
+*, a, button { cursor: none; }
+.cursor {
+  width:12px;height:12px;border-radius:50%;
+  background:var(--forest);position:fixed;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width 0.2s,height 0.2s,background 0.2s;
+}
+.cursor-ring {
+  width:36px;height:36px;border-radius:50%;
+  border:1.5px solid var(--gold);position:fixed;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:all 0.12s ease;
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 4rem;
+  background:rgba(245,240,232,0.95);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:700;
+  color:var(--forest);text-decoration:none;
+  display:flex;align-items:center;gap:10px;letter-spacing:0.02em;
+}
+.nav-logo-emblem {
+  width:32px;height:32px;background:var(--forest);
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a {
+  font-size:0.82rem;font-weight:500;letter-spacing:0.06em;
+  text-transform:uppercase;color:var(--muted);
+  text-decoration:none;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--forest);}
+.nav-actions{display:flex;gap:10px;align-items:center;}
+.nav-btn-ghost {
+  padding:0.55rem 1.25rem;font-family:'Outfit',sans-serif;
+  font-size:0.82rem;font-weight:500;letter-spacing:0.04em;
+  border:1.5px solid var(--forest);background:transparent;
+  color:var(--forest);border-radius:3px;transition:all 0.2s;
+  text-decoration:none;display:inline-block;
+}
+.nav-btn-ghost:hover{background:var(--forest);color:var(--cream);}
+.nav-btn-solid {
+  padding:0.55rem 1.25rem;font-family:'Outfit',sans-serif;
+  font-size:0.82rem;font-weight:600;letter-spacing:0.04em;
+  border:none;background:var(--gold);
+  color:var(--forest);border-radius:3px;transition:all 0.2s;
+  text-decoration:none;display:inline-block;
+}
+.nav-btn-solid:hover{background:var(--gold2);transform:translateY(-1px);}
+
+/* ── HERO ── */
+.hero {
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;padding:8rem 4rem 5rem;
+  position:relative;overflow:hidden;
+  background:var(--forest);
+}
+.hero-texture {
+  position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,0.02) 80px),
+    repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,255,255,0.02) 80px);
+  pointer-events:none;
+}
+.hero-glow {
+  position:absolute;top:-200px;right:-200px;
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,169,110,0.08) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-left{position:relative;z-index:2;}
+.hero-pretitle {
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:0.72rem;font-weight:600;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:1.75rem;
+  opacity:0;animation:fadeUp 0.7s 0.1s forwards;
+}
+.hero-pretitle-line{width:28px;height:1px;background:var(--gold);}
+.hero h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.2rem,5.5vw,5.5rem);
+  font-weight:300;line-height:1.05;
+  color:var(--cream);margin-bottom:2rem;
+  letter-spacing:-0.01em;
+  opacity:0;animation:fadeUp 0.7s 0.25s forwards;
+}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero h1 strong{font-weight:700;}
+.hero-desc {
+  font-size:1rem;font-weight:300;line-height:1.9;
+  color:rgba(245,240,232,0.55);max-width:460px;
+  margin-bottom:3rem;
+  opacity:0;animation:fadeUp 0.7s 0.4s forwards;
+}
+.hero-btns {
+  display:flex;gap:1rem;flex-wrap:wrap;
+  opacity:0;animation:fadeUp 0.7s 0.5s forwards;
+}
+.btn-gold {
+  padding:1rem 2.5rem;background:var(--gold);color:var(--forest);
+  font-family:'Outfit',sans-serif;font-size:0.9rem;font-weight:600;
+  letter-spacing:0.04em;border:none;border-radius:3px;
+  text-decoration:none;display:inline-block;transition:all 0.2s;
+}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-outline-cream {
+  padding:1rem 2.5rem;background:transparent;color:var(--cream);
+  font-family:'Outfit',sans-serif;font-size:0.9rem;font-weight:500;
+  letter-spacing:0.04em;border:1.5px solid rgba(245,240,232,0.25);
+  border-radius:3px;text-decoration:none;display:inline-block;transition:all 0.2s;
+}
+.btn-outline-cream:hover{border-color:rgba(245,240,232,0.6);background:rgba(245,240,232,0.05);}
+
+/* HERO RIGHT — VAULT VISUAL */
+.hero-right {
+  display:flex;align-items:center;justify-content:flex-end;
+  position:relative;z-index:2;
+  opacity:0;animation:fadeIn 1s 0.6s forwards;
+}
+.vault-card {
+  background:rgba(245,240,232,0.04);
+  border:1px solid rgba(200,169,110,0.2);
+  border-radius:8px;width:360px;
+  backdrop-filter:blur(8px);overflow:hidden;
+}
+.vault-header {
+  background:rgba(200,169,110,0.1);
+  border-bottom:1px solid rgba(200,169,110,0.15);
+  padding:1rem 1.25rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.vault-header-title {
+  font-size:0.72rem;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--gold);
+}
+.vault-header-count {
+  font-size:0.72rem;color:rgba(245,240,232,0.4);
+}
+.vault-profile {
+  padding:1rem 1.25rem;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  display:flex;align-items:center;gap:12px;
+  transition:background 0.2s;
+}
+.vault-profile:last-child{border-bottom:none;}
+.vault-profile:hover{background:rgba(200,169,110,0.05);}
+.vp-avatar {
+  width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-weight:700;flex-shrink:0;
+}
+.vp-info{flex:1;}
+.vp-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-weight:600;color:var(--cream);
+  margin-bottom:1px;
+}
+.vp-role{font-size:0.72rem;color:rgba(245,240,232,0.45);margin-bottom:4px;}
+.vp-tags{display:flex;gap:4px;flex-wrap:wrap;}
+.vp-tag {
+  font-size:0.62rem;padding:2px 7px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  color:rgba(245,240,232,0.5);border-radius:2px;
+}
+.vp-tag-gold {
+  background:rgba(200,169,110,0.12);
+  border-color:rgba(200,169,110,0.25);
+  color:var(--gold);
+}
+.vault-unlock {
+  font-size:0.68rem;font-weight:600;letter-spacing:0.06em;
+  padding:5px 12px;background:var(--gold);color:var(--forest);
+  border:none;border-radius:2px;white-space:nowrap;flex-shrink:0;
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  background:var(--gold);padding:0.85rem 0;overflow:hidden;
+  border-top:1px solid rgba(26,48,40,0.15);
+}
+.marquee-track {
+  display:flex;gap:3rem;animation:marquee 25s linear infinite;
+  white-space:nowrap;
+}
+.marquee-item {
+  font-size:0.72rem;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--forest);
+  display:flex;align-items:center;gap:1rem;flex-shrink:0;
+}
+.marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--forest);opacity:0.4;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ── STATS ── */
+.stats-strip {
+  display:grid;grid-template-columns:repeat(4,1fr);
+  background:var(--cream2);
+  border-bottom:1px solid var(--border);
+}
+.stat-item {
+  padding:2.5rem;border-right:1px solid var(--border);
+  text-align:center;
+}
+.stat-item:last-child{border-right:none;}
+.stat-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;font-weight:700;color:var(--forest);
+  display:block;line-height:1;
+}
+.stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.4rem;letter-spacing:0.03em;}
+
+/* ── SECTION COMMONS ── */
+.section{padding:7rem 4rem;}
+.section-eyebrow {
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:0.72rem;font-weight:600;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;
+}
+.eyebrow-line{width:24px;height:1px;background:var(--gold);}
+.section-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,4vw,3.8rem);font-weight:300;
+  line-height:1.15;color:var(--forest);max-width:680px;
+  letter-spacing:-0.01em;
+}
+.section-title em{font-style:italic;}
+.section-title strong{font-weight:700;}
+
+/* ── HOW IT WORKS ── */
+.steps-grid {
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;margin-top:5rem;
+  border:1px solid var(--border);
+}
+.step {
+  padding:3rem;border-right:1px solid var(--border);
+  position:relative;transition:background 0.3s;
+}
+.step:last-child{border-right:none;}
+.step:hover{background:white;}
+.step-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:4rem;font-weight:700;color:rgba(26,48,40,0.06);
+  line-height:1;margin-bottom:1.5rem;
+}
+.step-icon {
+  width:52px;height:52px;border-radius:50%;
+  background:var(--cream2);border:1.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.25rem;
+}
+.step h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem;font-weight:600;color:var(--forest);
+  margin-bottom:0.75rem;
+}
+.step p{font-size:0.9rem;line-height:1.8;color:var(--muted);}
+
+/* ── EMPLOYER SECTION ── */
+.employer-section{background:var(--forest);padding:7rem 4rem;}
+.employer-section .section-title{color:var(--cream);}
+.employer-section .section-title em{color:var(--gold);}
+.employer-grid {
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;margin-top:5rem;
+}
+.employer-card {
+  background:rgba(245,240,232,0.04);
+  border:1px solid rgba(200,169,110,0.15);
+  border-radius:8px;padding:2.5rem;
+  display:flex;flex-direction:column;gap:1rem;
+  transition:all 0.3s;position:relative;overflow:hidden;
+}
+.employer-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:2px;background:transparent;transition:background 0.3s;
+}
+.employer-card:hover{background:rgba(245,240,232,0.06);transform:translateY(-4px);}
+.employer-card:hover::before{background:var(--gold);}
+.employer-card.featured{border-color:rgba(200,169,110,0.4);}
+.employer-card.featured::before{background:var(--gold);}
+.plan-label {
+  font-size:0.68rem;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.25rem;
+}
+.plan-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:700;color:var(--cream);
+}
+.plan-price {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.8rem;font-weight:700;color:var(--cream);line-height:1;
+}
+.plan-price span{font-size:1rem;font-weight:300;color:rgba(245,240,232,0.4);}
+.plan-divider{height:1px;background:rgba(200,169,110,0.15);}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:10px;flex:1;}
+.plan-features li {
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:0.88rem;color:rgba(245,240,232,0.6);line-height:1.5;
+}
+.plan-check{color:var(--gold);flex-shrink:0;margin-top:1px;}
+.plan-btn {
+  padding:0.85rem;border-radius:4px;
+  font-family:'Outfit',sans-serif;font-size:0.88rem;font-weight:600;
+  letter-spacing:0.04em;cursor:pointer;
+  border:1.5px solid rgba(200,169,110,0.3);
+  background:transparent;color:var(--cream);
+  transition:all 0.2s;text-align:center;
+  text-decoration:none;display:block;
+}
+.plan-btn:hover{border-color:var(--gold);color:var(--gold);}
+.plan-btn.primary{background:var(--gold);color:var(--forest);border-color:var(--gold);}
+.plan-btn.primary:hover{background:var(--gold2);}
+
+/* ── GRADUATE UPLOAD ── */
+.upload-section {
+  background:var(--cream2);padding:7rem 4rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;
+}
+.upload-form-box {
+  background:white;border:1px solid var(--border);
+  border-radius:8px;padding:3rem;
+  box-shadow:0 24px 80px rgba(26,48,40,0.06);
+}
+.form-group{margin-bottom:1.25rem;}
+.form-label {
+  display:block;font-size:0.7rem;font-weight:600;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.6rem;
+}
+.form-input {
+  width:100%;padding:0.85rem 1rem;
+  border:1.5px solid var(--border);border-radius:4px;
+  font-family:'Outfit',sans-serif;font-size:0.95rem;
+  background:var(--cream);color:var(--ink);
+  outline:none;transition:border-color 0.2s;
+}
+.form-input:focus{border-color:var(--leaf);background:white;}
+.form-input option{background:white;}
+.drop-zone {
+  border:2px dashed var(--border);border-radius:6px;
+  padding:2rem;text-align:center;cursor:none;
+  transition:all 0.2s;background:var(--cream);position:relative;
+}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--leaf);background:rgba(61,107,88,0.04);}
+.drop-icon {
+  width:52px;height:52px;margin:0 auto 1rem;
+  background:white;border-radius:50%;
+  border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+}
+.drop-text{font-size:0.88rem;color:var(--muted);line-height:1.6;}
+.drop-text strong{color:var(--leaf);}
+.drop-file-input{position:absolute;inset:0;opacity:0;cursor:none;}
+.file-list{margin-top:0.75rem;display:flex;flex-direction:column;gap:6px;}
+.file-item {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 12px;background:rgba(61,107,88,0.06);
+  border:1px solid rgba(61,107,88,0.15);border-radius:4px;
+  font-size:0.82rem;color:var(--leaf);
+}
+.file-remove{cursor:none;color:#c44b2b;}
+.submit-btn {
+  width:100%;padding:1rem;background:var(--forest);
+  color:var(--cream);border:none;font-family:'Outfit',sans-serif;
+  font-size:0.95rem;font-weight:600;letter-spacing:0.04em;
+  border-radius:4px;margin-top:0.5rem;transition:all 0.2s;
+}
+.submit-btn:hover{background:var(--forest2);transform:translateY(-1px);}
+.form-note{font-size:0.75rem;color:var(--muted);text-align:center;margin-top:0.75rem;}
+.free-pill {
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(61,107,88,0.08);border:1px solid rgba(61,107,88,0.2);
+  color:var(--leaf);font-size:0.72rem;font-weight:600;
+  letter-spacing:0.06em;text-transform:uppercase;
+  padding:5px 14px;border-radius:20px;margin-bottom:1.5rem;
+}
+.success-msg{display:none;text-align:center;padding:2.5rem;}
+.success-icon {
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(61,107,88,0.08);border:2px solid var(--leaf);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.25rem;font-size:2rem;
+}
+.success-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;font-weight:700;color:var(--forest);margin-bottom:0.5rem;
+}
+.success-sub{font-size:0.92rem;color:var(--muted);line-height:1.7;}
+
+/* ── JOBS BOARD ── */
+.jobs-section{background:var(--cream);padding:7rem 4rem;}
+.jobs-toolbar {
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;margin:3rem 0 1.5rem;
+}
+.job-filters{display:flex;gap:8px;flex-wrap:wrap;}
+.job-filter-btn {
+  padding:6px 18px;font-family:'Outfit',sans-serif;
+  font-size:0.78rem;font-weight:500;border-radius:20px;
+  border:1.5px solid var(--border);background:white;
+  color:var(--muted);transition:all 0.2s;
+}
+.job-filter-btn:hover{border-color:var(--leaf);color:var(--leaf);}
+.job-filter-btn.active{background:var(--forest);color:var(--cream);border-color:var(--forest);}
+.jobs-count-label{font-size:0.8rem;color:var(--muted);}
+.jobs-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:1.25rem;margin-top:1rem;
+}
+.job-card {
+  background:white;border:1px solid var(--border);border-radius:8px;
+  padding:1.5rem;display:flex;flex-direction:column;gap:10px;
+  transition:all 0.25s;animation:fadeUp 0.4s both;
+}
+.job-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(26,48,40,0.1);border-color:rgba(61,107,88,0.3);}
+.job-card-top{display:flex;align-items:center;justify-content:space-between;}
+.job-logo {
+  width:44px;height:44px;border-radius:8px;background:var(--cream2);
+  border:1px solid var(--border);display:flex;align-items:center;
+  justify-content:center;font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:700;color:var(--forest);overflow:hidden;
+}
+.job-level-badge{font-size:0.65rem;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:0.05em;}
+.level-entry{background:rgba(26,48,40,0.08);color:var(--forest);}
+.level-grad{background:rgba(200,169,110,0.15);color:#8a6520;}
+.level-intern{background:rgba(61,107,88,0.1);color:var(--leaf);}
+.level-mid{background:rgba(122,158,142,0.15);color:#3d6b58;}
+.job-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:600;color:var(--forest);line-height:1.3;
+}
+.job-company{font-size:0.82rem;font-weight:500;color:var(--leaf);}
+.job-meta{display:flex;flex-direction:column;gap:3px;}
+.job-meta-item{font-size:0.76rem;color:var(--muted);}
+.job-footer {
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:auto;padding-top:12px;border-top:1px solid var(--border);
+}
+.job-posted{font-size:0.7rem;color:var(--muted);}
+.job-apply-btn {
+  font-size:0.76rem;font-weight:600;color:var(--forest);
+  text-decoration:none;padding:6px 16px;
+  border:1.5px solid var(--forest);border-radius:3px;transition:all 0.2s;
+}
+.job-apply-btn:hover{background:var(--forest);color:var(--cream);}
+.jobs-spinner {
+  width:22px;height:22px;border-radius:50%;
+  border:2px solid var(--border);border-top-color:var(--forest);
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── TESTIMONIALS ── */
+.testi-section{background:var(--cream2);padding:7rem 4rem;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:5rem;background:var(--border);}
+.testi-card {
+  padding:2.5rem;background:var(--cream2);transition:background 0.2s;
+}
+.testi-card:hover{background:white;}
+.testi-quote {
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;color:var(--gold);line-height:1;margin-bottom:0.5rem;
+}
+.testi-text{font-size:0.92rem;line-height:1.85;color:var(--muted);margin-bottom:1.75rem;}
+.testi-author{display:flex;align-items:center;gap:12px;}
+.testi-avatar {
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;
+}
+.testi-name{font-size:0.9rem;font-weight:600;color:var(--forest);}
+.testi-role{font-size:0.75rem;color:var(--muted);}
+
+/* ── CTA ── */
+.cta-section {
+  margin:0 4rem 7rem;background:var(--forest);
+  border-radius:8px;padding:5rem;
+  display:grid;grid-template-columns:1fr auto;
+  align-items:center;gap:3rem;
+  position:relative;overflow:hidden;
+}
+.cta-section::before {
+  content:'';position:absolute;
+  top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,169,110,0.1) 0%,transparent 65%);
+  pointer-events:none;
+}
+.cta-section h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;
+  color:var(--cream);line-height:1.2;margin-bottom:0.75rem;
+}
+.cta-section h2 em{font-style:italic;color:var(--gold);}
+.cta-section p{font-size:0.95rem;color:rgba(245,240,232,0.5);}
+.cta-btns{display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
+
+/* ── FOOTER ── */
+footer {
+  background:var(--ink);color:var(--cream);
+  padding:5rem 4rem 2.5rem;
+  border-top:3px solid var(--gold);
+}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem;}
+.footer-logo {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:700;margin-bottom:1rem;
+  display:flex;align-items:center;gap:10px;color:var(--cream);
+}
+.footer-logo-emblem {
+  width:28px;height:28px;background:var(--gold);
+  border-radius:3px;display:flex;align-items:center;justify-content:center;
+}
+.footer-desc{font-size:0.88rem;line-height:1.8;color:rgba(245,240,232,0.4);max-width:300px;}
+.footer-col h4 {
+  font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;
+  color:var(--gold);margin-bottom:1.25rem;font-weight:600;
+}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:0.7rem;}
+.footer-col a {
+  font-size:0.88rem;color:rgba(245,240,232,0.4);
+  text-decoration:none;transition:color 0.2s;
+}
+.footer-col a:hover{color:var(--cream);}
+.footer-bottom {
+  border-top:1px solid rgba(245,240,232,0.08);
+  padding-top:2rem;display:flex;
+  justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-copy{font-size:0.78rem;color:rgba(245,240,232,0.2);}
+.footer-tagline {
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.9rem;font-style:italic;color:rgba(245,240,232,0.3);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.8s,transform 0.8s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  .hero{grid-template-columns:1fr;padding:6rem 1.5rem 3rem;}
+  .hero-right{display:none;}
+  .stats-strip{grid-template-columns:repeat(2,1fr);}
+  .stat-item{border-bottom:1px solid var(--border);}
+  .section{padding:4rem 1.5rem;}
+  .steps-grid{grid-template-columns:1fr;}
+  .step{border-right:none;border-bottom:1px solid var(--border);}
+  .employer-section{padding:4rem 1.5rem;}
+  .employer-grid{grid-template-columns:1fr;}
+  .upload-section{grid-template-columns:1fr;padding:4rem 1.5rem;gap:3rem;}
+  .jobs-section{padding:4rem 1.5rem;}
+  .testi-section{padding:4rem 1.5rem;}
+  .testi-grid{grid-template-columns:1fr;background:transparent;gap:1rem;}
+  .testi-card{background:white;}
+  .cta-section{margin:0 1.5rem 4rem;padding:3rem 2rem;grid-template-columns:1fr;}
+  .cta-btns{align-items:flex-start;}
+  .footer-top{grid-template-columns:1fr;gap:2.5rem;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-emblem">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="6" width="12" height="9" rx="1.5" fill="#c8a96e"/><path d="M5 6V4.5a3 3 0 016 0V6" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="10.5" r="1.5" fill="#1a3028"/></svg>
+    </div>
+    GradVault
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#employers">For Employers</a></li>
+    <li><a href="#graduates">Upload CV</a></li>
+    <li><a href="#jobs">Live Jobs</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#graduates" class="nav-btn-ghost">Upload Free</a>
+    <a href="#employers" class="nav-btn-solid">Hire Talent</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-texture"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-left">
+    <div class="hero-pretitle"><span class="hero-pretitle-line"></span>East Africa's Exclusive Talent Network</div>
+    <h1>The <em>vault</em> of<br><strong>verified</strong><br>graduate talent.</h1>
+    <p class="hero-desc">GradVault curates East Africa's most exceptional graduates. We personally review every profile. Employers access a pool of talent they won't find anywhere else.</p>
+    <div class="hero-btns">
+      <a href="#employers" class="btn-gold">Access the Vault →</a>
+      <a href="#graduates" class="btn-outline-cream">Upload CV — Free</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="vault-card">
+      <div class="vault-header">
+        <span class="vault-header-title">Verified Talent Pool</span>
+        <span class="vault-header-count">500+ profiles</span>
+      </div>
+      <div class="vault-profile">
+        <div class="vp-avatar" style="background:rgba(200,169,110,0.12);color:var(--gold);">AW</div>
+        <div class="vp-info">
+          <div class="vp-name">Amina Wanjiku</div>
+          <div class="vp-role">BSc Computer Science · UoN · 2024</div>
+          <div class="vp-tags"><span class="vp-tag">Python</span><span class="vp-tag">React</span><span class="vp-tag vp-tag-gold">First Class</span></div>
+        </div>
+        <button class="vault-unlock">Unlock</button>
+      </div>
+      <div class="vault-profile">
+        <div class="vp-avatar" style="background:rgba(122,158,142,0.15);color:var(--sage);">JM</div>
+        <div class="vp-info">
+          <div class="vp-name">James Mwangi</div>
+          <div class="vp-role">BCom Finance · Strathmore · 2024</div>
+          <div class="vp-tags"><span class="vp-tag">CPA</span><span class="vp-tag">SAP</span><span class="vp-tag vp-tag-gold">Upper 2nd</span></div>
+        </div>
+        <button class="vault-unlock">Unlock</button>
+      </div>
+      <div class="vault-profile">
+        <div class="vp-avatar" style="background:rgba(200,169,110,0.08);color:rgba(200,169,110,0.6);">FK</div>
+        <div class="vp-info">
+          <div class="vp-name">Faith Kamau</div>
+          <div class="vp-role">BEng Civil · JKUAT · 2024</div>
+          <div class="vp-tags"><span class="vp-tag">AutoCAD</span><span class="vp-tag vp-tag-gold">First Class</span></div>
+        </div>
+        <button class="vault-unlock">Unlock</button>
+      </div>
+      <div class="vault-profile">
+        <div class="vp-avatar" style="background:rgba(122,158,142,0.1);color:rgba(122,158,142,0.7);">BO</div>
+        <div class="vp-info">
+          <div class="vp-name">Brian Otieno</div>
+          <div class="vp-role">BSc Data Science · UoN · 2024</div>
+          <div class="vp-tags"><span class="vp-tag">SQL</span><span class="vp-tag">Tableau</span><span class="vp-tag vp-tag-gold">Upper 2nd</span></div>
+        </div>
+        <button class="vault-unlock">Unlock</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Kenya<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Uganda<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Tanzania<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Rwanda<span class="marquee-dot"></span></span>
+    <span class="marquee-item">500+ Verified Graduates<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Human-Reviewed Profiles<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Warm Introductions<span class="marquee-dot"></span></span>
+    <span class="marquee-item">48h Turnaround<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Kenya<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Uganda<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Tanzania<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Rwanda<span class="marquee-dot"></span></span>
+    <span class="marquee-item">500+ Verified Graduates<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Human-Reviewed Profiles<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Warm Introductions<span class="marquee-dot"></span></span>
+    <span class="marquee-item">48h Turnaround<span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item"><span class="stat-num">500+</span><div class="stat-label">Verified graduates</div></div>
+  <div class="stat-item"><span class="stat-num">120+</span><div class="stat-label">Employer partners</div></div>
+  <div class="stat-item"><span class="stat-num">78%</span><div class="stat-label">Placement rate</div></div>
+  <div class="stat-item"><span class="stat-num">48h</span><div class="stat-label">Average match time</div></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="reveal">
+    <div class="section-eyebrow"><span class="eyebrow-line"></span>How it works</div>
+    <h2 class="section-title">A curated talent network built on <em>quality, not quantity.</em></h2>
+  </div>
+  <div class="steps-grid reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3v10M6 8l5-5 5 5M5 18h12" stroke="#3d6b58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Graduates apply free</h3>
+      <p>Any East African graduate can upload their CV and certificates at no cost. We believe access to opportunity should never be gated by money.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#3d6b58" stroke-width="1.8"/><path d="M8 11l2 2 4-4" stroke="#3d6b58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>We personally review every profile</h3>
+      <p>No algorithms. A real person reads every application, verifies credentials, and adds each graduate to the vault with curated notes for employers.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 11h14M11 4l7 7-7 7" stroke="#3d6b58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Employers access the vault</h3>
+      <p>Paying employers browse verified profiles, get personalised referrals, and receive a warm introduction to the graduate — dramatically shortening time-to-hire.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EMPLOYER PLANS -->
+<section class="employer-section" id="employers">
+  <div class="reveal" style="text-align:center;">
+    <div class="section-eyebrow" style="justify-content:center;"><span class="eyebrow-line"></span>Employer access</div>
+    <h2 class="section-title" style="max-width:100%;text-align:center;color:var(--cream);">Invest in talent. <em>Stop wasting time</em><br>on unqualified applications.</h2>
+    <p style="font-size:0.92rem;color:rgba(245,240,232,0.4);margin-top:1rem;">All plans include access to our verified graduate database and personal matching support.</p>
+  </div>
+  <div class="employer-grid reveal">
+    <div class="employer-card">
+      <div class="plan-label">Starter</div>
+      <div class="plan-name">Essentials</div>
+      <div class="plan-price">KES 5,000 <span>/ month</span></div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="plan-check">✦</span>Access to 50 verified graduate profiles</li>
+        <li><span class="plan-check">✦</span>Post 1 active job listing</li>
+        <li><span class="plan-check">✦</span>Basic field & skills filtering</li>
+        <li><span class="plan-check">✦</span>Email support</li>
+      </ul>
+      <a href="mailto:gradvault@gmail.com?subject=Essentials Plan Inquiry" class="plan-btn">Get Started →</a>
+    </div>
+    <div class="employer-card featured">
+      <div class="plan-label">Most Popular</div>
+      <div class="plan-name">Professional</div>
+      <div class="plan-price">KES 15,000 <span>/ month</span></div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="plan-check">✦</span>Unlimited verified profile access</li>
+        <li><span class="plan-check">✦</span>Post up to 5 active job listings</li>
+        <li><span class="plan-check">✦</span>Advanced filtering — field, university, GPA</li>
+        <li><span class="plan-check">✦</span>Priority matching & personal referrals</li>
+        <li><span class="plan-check">✦</span>Dedicated account manager</li>
+        <li><span class="plan-check">✦</span>Warm introductions to shortlisted candidates</li>
+      </ul>
+      <a href="mailto:gradvault@gmail.com?subject=Professional Plan Inquiry" class="plan-btn primary">Get Started →</a>
+    </div>
+    <div class="employer-card">
+      <div class="plan-label">Enterprise</div>
+      <div class="plan-name">Bespoke</div>
+      <div class="plan-price">Custom</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="plan-check">✦</span>Everything in Professional</li>
+        <li><span class="plan-check">✦</span>Unlimited job listings</li>
+        <li><span class="plan-check">✦</span>On-site graduate recruitment drives</li>
+        <li><span class="plan-check">✦</span>Bulk candidate pre-screening</li>
+        <li><span class="plan-check">✦</span>Success-based placement fee option</li>
+        <li><span class="plan-check">✦</span>Multi-country East Africa hiring</li>
+      </ul>
+      <a href="mailto:gradvault@gmail.com?subject=Enterprise Plan Inquiry" class="plan-btn">Talk to Us →</a>
+    </div>
+  </div>
+</section>
+
+<!-- GRADUATE UPLOAD -->
+<section class="upload-section" id="graduates">
+  <div>
+    <div class="section-eyebrow"><span class="eyebrow-line"></span>For graduates · Always free</div>
+    <h2 class="section-title">Your credentials deserve to be <em>seen by the right people.</em></h2>
+    <p style="font-size:0.95rem;color:var(--muted);margin-top:1.5rem;line-height:1.9;max-width:440px;">Upload once. We personally review your profile, add you to the GradVault, and make warm introductions to employers who are actively hiring.</p>
+    <div style="margin-top:2.5rem;display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;align-items:center;gap:14px;font-size:0.9rem;color:var(--muted);">
+        <span style="width:22px;height:22px;border-radius:50%;background:rgba(61,107,88,0.1);border:1px solid rgba(61,107,88,0.2);display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--leaf);flex-shrink:0;">✓</span>
+        100% free — no hidden charges, ever
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;font-size:0.9rem;color:var(--muted);">
+        <span style="width:22px;height:22px;border-radius:50%;background:rgba(61,107,88,0.1);border:1px solid rgba(61,107,88,0.2);display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--leaf);flex-shrink:0;">✓</span>
+        Every profile personally reviewed by our team
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;font-size:0.9rem;color:var(--muted);">
+        <span style="width:22px;height:22px;border-radius:50%;background:rgba(61,107,88,0.1);border:1px solid rgba(61,107,88,0.2);display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--leaf);flex-shrink:0;">✓</span>
+        Response within 48 hours guaranteed
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;font-size:0.9rem;color:var(--muted);">
+        <span style="width:22px;height:22px;border-radius:50%;background:rgba(61,107,88,0.1);border:1px solid rgba(61,107,88,0.2);display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--leaf);flex-shrink:0;">✓</span>
+        Your data confidential — shared only with matched employers
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;font-size:0.9rem;color:var(--muted);">
+        <span style="width:22px;height:22px;border-radius:50%;background:rgba(61,107,88,0.1);border:1px solid rgba(61,107,88,0.2);display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--leaf);flex-shrink:0;">✓</span>
+        Open to all East African graduates
+      </div>
+    </div>
+  </div>
+  <div class="upload-form-box">
+    <div id="form-content">
+      <div class="free-pill">✓ Free for graduates</div>
+      <div id="apply-job-banner" style="display:none;background:rgba(61,107,88,0.06);border-left:3px solid var(--leaf);padding:10px 14px;border-radius:0 4px 4px 0;font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;"></div>
+      <div class="form-group">
+        <label class="form-label">Full name</label>
+        <input type="text" class="form-input" id="f-name" placeholder="e.g. Amina Wanjiku"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input type="email" class="form-input" id="f-email" placeholder="you@email.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone number</label>
+        <input type="tel" class="form-input" id="f-phone" placeholder="+254 7xx xxx xxx"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Country</label>
+        <select class="form-input" id="f-country">
+          <option value="">Select your country...</option>
+          <option>Kenya</option>
+          <option>Uganda</option>
+          <option>Tanzania</option>
+          <option>Rwanda</option>
+          <option>Ethiopia</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Field of study / profession</label>
+        <select class="form-input" id="f-field">
+          <option value="">Select your field...</option>
+          <option>Engineering & Technology</option>
+          <option>Business & Finance</option>
+          <option>Health & Medicine</option>
+          <option>Education</option>
+          <option>Law</option>
+          <option>Arts & Social Sciences</option>
+          <option>Agriculture</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Upload CV & certificates</label>
+        <div class="drop-zone" id="drop-zone">
+          <input type="file" class="drop-file-input" id="file-input" multiple accept=".pdf,.doc,.docx" onchange="handleFiles(this.files)"/>
+          <div class="drop-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3v10M6 8l5-5 5 5" stroke="#3d6b58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 16v1a2 2 0 002 2h12a2 2 0 002-2v-1" stroke="#7a9e8e" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div class="drop-text"><strong>Click to upload</strong> or drag & drop<br><span style="font-size:0.75rem;">PDF, DOC, DOCX up to 10MB</span></div>
+        </div>
+        <div class="file-list" id="file-list"></div>
+      </div>
+      <button class="submit-btn" id="submit-btn" onclick="submitForm()">Add Me to the Vault — Free</button>
+      <p class="form-note">Your documents are kept confidential and only shared with matched employers.</p>
+    </div>
+    <div class="success-msg" id="success-msg">
+      <div class="success-icon">✓</div>
+      <div class="success-title">You're in the vault.</div>
+      <p class="success-sub">We've received your profile and will review it within 48 hours. Keep an eye on your inbox — we'll be in touch when we have the right match for you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE JOBS -->
+<section class="jobs-section" id="jobs">
+  <div class="reveal">
+    <div class="section-eyebrow"><span class="eyebrow-line"></span>Live vacancies · Kenya</div>
+    <h2 class="section-title">Opportunities <em>worth applying for.</em></h2>
+    <p style="font-size:0.9rem;color:var(--muted);margin-top:0.75rem;">Kenya-based roles only — entry level, internship, graduate trainee and mid-level.</p>
+  </div>
+  <div class="jobs-toolbar reveal">
+    <div class="job-filters">
+      <button class="job-filter-btn active" data-filter="all" onclick="renderJobs('all')">All roles</button>
+      <button class="job-filter-btn" data-filter="Entry Level" onclick="renderJobs('Entry Level')">Entry Level</button>
+      <button class="job-filter-btn" data-filter="Graduate Trainee" onclick="renderJobs('Graduate Trainee')">Graduate Trainee</button>
+      <button class="job-filter-btn" data-filter="Internship" onclick="renderJobs('Internship')">Internship</button>
+      <button class="job-filter-btn" data-filter="Mid Level" onclick="renderJobs('Mid Level')">Mid Level</button>
+    </div>
+    <span class="jobs-count-label" id="jobs-count"></span>
+  </div>
+  <div id="jobs-loading" style="display:none;align-items:center;justify-content:center;gap:12px;padding:3rem;color:var(--muted);font-size:0.9rem;">
+    <div class="jobs-spinner"></div> Fetching live vacancies...
+  </div>
+  <div id="jobs-empty" style="display:none;text-align:center;padding:3rem;color:var(--muted);">No vacancies found for this filter.</div>
+  <div class="jobs-grid reveal" id="jobs-grid" style="display:none;"></div>
+  <div style="text-align:center;margin-top:2.5rem;">
+    <button class="nav-btn-ghost" onclick="jobsLoaded=false;fetchJobs()" style="font-size:0.82rem;">Refresh Vacancies</button>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section" id="testimonials">
+  <div class="reveal">
+    <div class="section-eyebrow"><span class="eyebrow-line"></span>Success stories</div>
+    <h2 class="section-title">Graduates who found their <em>place.</em></h2>
+  </div>
+  <div class="testi-grid reveal">
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">I had been job hunting for 8 months with no results. GradVault matched me to a fintech startup in Westlands within two weeks. The personal introduction made all the difference.</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:rgba(26,48,40,0.08);color:var(--forest);">JM</div>
+        <div><div class="testi-name">James Mwangi</div><div class="testi-role">BSc Finance · Strathmore University</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">What sets GradVault apart is they actually read your profile. The role they referred me to matched my skills perfectly. It felt like they genuinely understood what I was looking for.</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:rgba(200,169,110,0.12);color:var(--gold);">FO</div>
+        <div><div class="testi-name">Faith Otieno</div><div class="testi-role">BEd · Kenyatta University</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">The employer already knew who I was before I walked in for the interview. GradVault had briefed them on my background. I got the offer the same day.</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:rgba(61,107,88,0.1);color:var(--leaf);">BK</div>
+        <div><div class="testi-name">Brian Kamau</div><div class="testi-role">BSc Software Engineering · JKUAT</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section reveal">
+  <div>
+    <h2>Ready to access <em>East Africa's finest</em> graduate talent?</h2>
+    <p>Join 120+ employers who trust GradVault to find the right hire — fast.</p>
+  </div>
+  <div class="cta-btns">
+    <a href="mailto:careerconnect612@gmail.com?subject=Employer Inquiry — GradVault" class="btn-gold">Talk to Us →</a>
+    <a href="#graduates" class="btn-outline-cream" style="text-align:center;">Upload CV Free</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-logo-emblem">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="5" width="12" height="8" rx="1.5" fill="#1a3028"/><path d="M4 5V3.5a3 3 0 016 0V5" stroke="#1a3028" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        GradVault
+      </div>
+      <p class="footer-desc">East Africa's most curated graduate talent network. Free for graduates. Built for employers who value quality over quantity.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#employers">For Employers</a></li>
+        <li><a href="#graduates">Upload CV</a></li>
+        <li><a href="#jobs">Live Jobs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Employers</h4>
+      <ul>
+        <li><a href="#employers">Essentials Plan</a></li>
+        <li><a href="#employers">Professional Plan</a></li>
+        <li><a href="#employers">Enterprise</a></li>
+        <li><a href="mailto:careerconnect612@gmail.com">Request Demo</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:careerconnect612@gmail.com">careerconnect612@gmail.com</a></li>
+        <li><a href="tel:+254112182261">+254 112 182 261</a></li>
+        <li><a href="https://wa.me/254112182261">WhatsApp us</a></li>
+        <li><a href="#">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 GradVault. All rights reserved.</p>
+    <p class="footer-tagline">The vault of East African graduate talent.</p>
+  </div>
+</footer>
+
+<script>
+// ── CUSTOM CURSOR ──────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+function animateRing() { rx += (mx-rx)*0.12; ry += (my-ry)*0.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animateRing); }
+animateRing();
+document.querySelectorAll('a,button').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.width='20px'; cursor.style.height='20px'; cursor.style.background='var(--gold)'; ring.style.width='52px'; ring.style.height='52px'; });
+  el.addEventListener('mouseleave', () => { cursor.style.width='12px'; cursor.style.height='12px'; cursor.style.background='var(--forest)'; ring.style.width='36px'; ring.style.height='36px'; });
+});
+
+// ── SCROLL REVEAL ──────────────────────────────────────────
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+
+// ── FILE UPLOAD ────────────────────────────────────────────
+let uploadedFiles = [];
+const dropZone = document.getElementById('drop-zone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
+
+function handleFiles(files) {
+  Array.from(files).forEach(f => { if (!uploadedFiles.find(u => u.name===f.name)) uploadedFiles.push(f); });
+  renderFiles();
+}
+function renderFiles() {
+  const list = document.getElementById('file-list');
+  list.innerHTML = '';
+  uploadedFiles.forEach((f,i) => {
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    item.innerHTML = `<span>📄 ${f.name}</span><span class="file-remove" onclick="removeFile(${i})">✕</span>`;
+    list.appendChild(item);
+  });
+}
+function removeFile(i) { uploadedFiles.splice(i,1); renderFiles(); }
+
+// ── FORM SUBMIT ────────────────────────────────────────────
+const CLOUDINARY_NAME   = 'dclztcwdc';
+const CLOUDINARY_PRESET = 'cv_uploads';
+
+async function submitForm() {
+  const name    = document.getElementById('f-name').value.trim();
+  const email   = document.getElementById('f-email').value.trim();
+  const phone   = document.getElementById('f-phone').value.trim();
+  const country = document.getElementById('f-country').value;
+  const field   = document.getElementById('f-field').value;
+
+  if (!name||!email||!phone||!country||!field) { alert('Please fill in all fields.'); return; }
+  if (uploadedFiles.length===0) { alert('Please upload at least one document.'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Uploading documents...';
+  btn.style.opacity = '0.7';
+
+  try {
+    const fileLinks = [];
+    for (const file of uploadedFiles) {
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('upload_preset', CLOUDINARY_PRESET);
+      fd.append('folder', 'gradvault-cvs');
+      const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/raw/upload`, { method:'POST', body:fd });
+      const data = await res.json();
+      if (data.secure_url) fileLinks.push({ name:file.name, url:data.secure_url });
+    }
+
+    btn.textContent = 'Adding to vault...';
+
+    const banner     = document.getElementById('apply-job-banner');
+    const appliedJob = banner?.style.display!=='none' ? banner.innerText.trim() : 'Direct submission';
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('country', country);
+    formData.append('field_of_study', field);
+    formData.append('applied_for', appliedJob);
+    formData.append('cv_links', fileLinks.map(f=>`${f.name}: ${f.url}`).join('\n'));
+    formData.append('_subject', `New GradVault Profile — ${name} · ${country}`);
+    formData.append('_replyto', email);
+
+    const response = await fetch('https://formspree.io/f/xojpnqkj', { method:'POST', body:formData, headers:{'Accept':'application/json'} });
+    if (response.ok) {
+      document.getElementById('form-content').style.display = 'none';
+      document.getElementById('success-msg').style.display  = 'block';
+    } else throw new Error('Submission failed');
+  } catch(err) {
+    btn.textContent = 'Add Me to the Vault — Free';
+    btn.style.opacity = '1';
+    alert('Something went wrong. Please email us at careerconnect612@gmail.com');
+  }
+}
+
+// ── APPLY JOB → UPLOAD ────────────────────────────────────
+function applyForJob(title, company) {
+  document.getElementById('graduates').scrollIntoView({ behavior:'smooth' });
+  const banner = document.getElementById('apply-job-banner');
+  banner.style.display = 'block';
+  banner.innerHTML = `<strong style="color:var(--leaf)">Applying for:</strong> ${title} at <strong>${company}</strong><br><span style="font-size:0.78rem;">Upload your CV below and we'll personally introduce you to this employer.</span>`;
+}
+
+// ── JOBS BOARD ────────────────────────────────────────────
+let allJobs=[], jobsLoaded=false;
+const KENYA_TERMS=['kenya','nairobi','mombasa','kisumu','nakuru','eldoret'];
+function isKenya(loc) { if(!loc) return false; return KENYA_TERMS.some(t=>loc.toLowerCase().includes(t)); }
+
+async function fetchJobs() {
+  if (jobsLoaded) return;
+  jobsLoaded = true;
+  document.getElementById('jobs-loading').style.display='flex';
+  document.getElementById('jobs-grid').style.display='none';
+  const results=[];
+  try {
+    const r1 = await fetch('https://remotive.com/api/remote-jobs?limit=40');
+    if (r1.ok) {
+      const d1 = await r1.json();
+      (d1.jobs||[]).filter(j=>isKenya(j.candidate_required_location)).forEach(j=>{
+        results.push({title:j.title,company:j.company_name,location:j.candidate_required_location,type:j.job_type||'Full Time',level:guessLevel(j.title+' '+j.description),url:j.url,posted:j.publication_date?new Date(j.publication_date).toLocaleDateString('en-KE',{day:'numeric',month:'short'}):'Recent',logo:j.company_logo||null});
+      });
+    }
+  } catch(e){}
+  if (results.length===0) results.push(...fallbackJobs());
+  allJobs=results;
+  document.getElementById('jobs-loading').style.display='none';
+  document.getElementById('jobs-grid').style.display='grid';
+  document.getElementById('jobs-count').textContent=allJobs.length+' vacancies';
+  renderJobs('all');
+}
+
+function guessLevel(text) {
+  const t=text.toLowerCase();
+  if (t.includes('intern')) return 'Internship';
+  if (t.includes('graduate')||t.includes('trainee')) return 'Graduate Trainee';
+  if (t.includes('senior')||t.includes('lead')||t.includes('manager')) return 'Mid Level';
+  return 'Entry Level';
+}
+
+function renderJobs(filter) {
+  document.querySelectorAll('.job-filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));
+  const filtered=filter==='all'?allJobs:allJobs.filter(j=>j.level.toLowerCase().includes(filter.toLowerCase()));
+  const grid=document.getElementById('jobs-grid');
+  const empty=document.getElementById('jobs-empty');
+  if (filtered.length===0){grid.style.display='none';empty.style.display='block';return;}
+  grid.style.display='grid';empty.style.display='none';
+  grid.innerHTML=filtered.map((j,i)=>`
+    <div class="job-card" style="animation-delay:${i*0.05}s">
+      <div class="job-card-top">
+        <div class="job-logo">${j.logo?`<img src="${j.logo}" style="width:100%;height:100%;object-fit:contain;">`:`${(j.company||'?')[0]}`}</div>
+        <div class="job-level-badge ${levelClass(j.level)}">${j.level}</div>
+      </div>
+      <div class="job-title">${j.title}</div>
+      <div class="job-company">${j.company}</div>
+      <div class="job-meta">
+        <span class="job-meta-item">📍 ${j.location}</span>
+        <span class="job-meta-item">🕐 ${j.type}</span>
+      </div>
+      <div class="job-footer">
+        <span class="job-posted">Posted ${j.posted}</span>
+        <a href="#graduates" class="job-apply-btn" onclick="applyForJob('${j.title.replace(/'/g,"\\'")}','${j.company.replace(/'/g,"\\'")}')">Apply via GradVault</a>
+      </div>
+    </div>`).join('');
+}
+
+function levelClass(l){
+  if(l==='Internship')return 'level-intern';
+  if(l==='Graduate Trainee')return 'level-grad';
+  if(l==='Mid Level')return 'level-mid';
+  return 'level-entry';
+}
+
+function fallbackJobs(){return[
+  {title:'Software Developer (Graduate)',company:'Safaricom PLC',location:'Nairobi, Kenya',type:'Full Time',level:'Graduate Trainee',posted:'2 Jan',logo:null},
+  {title:'Finance Internship Programme',company:'Equity Bank',location:'Nairobi, Kenya',type:'Internship',level:'Internship',posted:'5 Jan',logo:null},
+  {title:'Business Analyst (Entry Level)',company:'KCB Group',location:'Nairobi, Kenya',type:'Full Time',level:'Entry Level',posted:'8 Jan',logo:null},
+  {title:'ICT Graduate Trainee',company:'Kenya Power',location:'Nairobi, Kenya',type:'Full Time',level:'Graduate Trainee',posted:'10 Jan',logo:null},
+  {title:'Marketing Associate',company:'Unilever Kenya',location:'Nairobi, Kenya',type:'Full Time',level:'Entry Level',posted:'11 Jan',logo:null},
+  {title:'Data Analyst Intern',company:'Cellulant',location:'Nairobi, Kenya',type:'Internship',level:'Internship',posted:'12 Jan',logo:null},
+  {title:'HR Graduate Trainee',company:'NCBA Bank',location:'Nairobi, Kenya',type:'Full Time',level:'Graduate Trainee',posted:'14 Jan',logo:null},
+  {title:'Software Engineer (Mid Level)',company:'Andela',location:'Nairobi, Kenya',type:'Full Time',level:'Mid Level',posted:'15 Jan',logo:null},
+  {title:'Agribusiness Officer',company:'KTDA',location:'Nairobi, Kenya',type:'Full Time',level:'Entry Level',posted:'16 Jan',logo:null},
+  {title:'Legal Intern',company:'Kenya Revenue Authority',location:'Nairobi, Kenya',type:'Internship',level:'Internship',posted:'17 Jan',logo:null},
+  {title:'Procurement Officer',company:'Nation Media Group',location:'Nairobi, Kenya',type:'Full Time',level:'Entry Level',posted:'18 Jan',logo:null},
+  {title:'Full Stack Developer',company:'Twiga Foods',location:'Nairobi, Kenya',type:'Full Time',level:'Mid Level',posted:'19 Jan',logo:null},
+];}
+
+const jobsSection=document.getElementById('jobs');
+if(jobsSection){
+  const jo=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){fetchJobs();jo.disconnect();}},{threshold:0.1});
+  jo.observe(jobsSection);
+}
+</script>
+</body>
+</html>
