@@ -28,21 +28,6 @@ html{scroll-behavior:smooth;}
 body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
 
 /* ── CURSOR ── */
-*, a, button { cursor: none; }
-.cursor {
-  width:12px;height:12px;border-radius:50%;
-  background:var(--forest);position:fixed;
-  pointer-events:none;z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:width 0.2s,height 0.2s,background 0.2s;
-}
-.cursor-ring {
-  width:36px;height:36px;border-radius:50%;
-  border:1.5px solid var(--gold);position:fixed;
-  pointer-events:none;z-index:9998;
-  transform:translate(-50%,-50%);
-  transition:all 0.12s ease;
-}
 
 /* ── NAV ── */
 nav {
@@ -382,7 +367,7 @@ nav {
 .form-input option{background:white;}
 .drop-zone {
   border:2px dashed var(--border);border-radius:6px;
-  padding:2rem;text-align:center;cursor:none;
+  padding:2rem;text-align:center;
   transition:all 0.2s;background:var(--cream);position:relative;
 }
 .drop-zone:hover,.drop-zone.drag-over{border-color:var(--leaf);background:rgba(61,107,88,0.04);}
@@ -394,7 +379,7 @@ nav {
 }
 .drop-text{font-size:0.88rem;color:var(--muted);line-height:1.6;}
 .drop-text strong{color:var(--leaf);}
-.drop-file-input{position:absolute;inset:0;opacity:0;cursor:none;}
+.drop-file-input{position:absolute;inset:0;opacity:0;}
 .file-list{margin-top:0.75rem;display:flex;flex-direction:column;gap:6px;}
 .file-item {
   display:flex;align-items:center;justify-content:space-between;
@@ -402,7 +387,7 @@ nav {
   border:1px solid rgba(61,107,88,0.15);border-radius:4px;
   font-size:0.82rem;color:var(--leaf);
 }
-.file-remove{cursor:none;color:#c44b2b;}
+.file-remove{color:#c44b2b;}
 .submit-btn {
   width:100%;padding:1rem;background:var(--forest);
   color:var(--cream);border:none;font-family:'Outfit',sans-serif;
@@ -611,10 +596,6 @@ footer {
 </style>
 </head>
 <body>
-
-<!-- CURSOR -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursor-ring"></div>
 
 <!-- NAV -->
 <nav>
@@ -1013,7 +994,7 @@ footer {
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <li><a href="mailto:careerconnect612@gmail.com">careerconnect612@gmail.com</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#70131102151502131f1e1e15130446414230171d11191c5e131f1d"><span class="__cf_email__" data-cfemail="92f1f3e0f7f7e0f1fdfcfcf7f1e6a4a3a0d2f5fff3fbfebcf1fdff">[email&#160;protected]</span></a></li>
         <li><a href="tel:+254112182261">+254 112 182 261</a></li>
         <li><a href="https://wa.me/254112182261">WhatsApp us</a></li>
         <li><a href="#">LinkedIn</a></li>
@@ -1026,19 +1007,7 @@ footer {
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ── CUSTOM CURSOR ──────────────────────────────────────────
-const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursor-ring');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
-function animateRing() { rx += (mx-rx)*0.12; ry += (my-ry)*0.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animateRing); }
-animateRing();
-document.querySelectorAll('a,button').forEach(el => {
-  el.addEventListener('mouseenter', () => { cursor.style.width='20px'; cursor.style.height='20px'; cursor.style.background='var(--gold)'; ring.style.width='52px'; ring.style.height='52px'; });
-  el.addEventListener('mouseleave', () => { cursor.style.width='12px'; cursor.style.height='12px'; cursor.style.background='var(--forest)'; ring.style.width='36px'; ring.style.height='36px'; });
-});
-
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── SCROLL REVEAL ──────────────────────────────────────────
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver((entries) => {
@@ -1212,6 +1181,4 @@ function fallbackJobs(){return[
   {title:'Marketing Associate',company:'Unilever Kenya',location:'Nairobi, Kenya',type:'Full Time',level:'Entry Level',posted:'11 Jan',logo:null},
   {title:'Data Analyst Intern',company:'Cellulant',location:'Nairobi, Kenya',type:'Internship',level:'Internship',posted:'12 Jan',logo:null},
   {title:'HR Graduate Trainee',company:'NCBA Bank',location:'Nairobi, Kenya',type:'Full Time',level:'Graduate Trainee',posted:'14 Jan',logo:null},
-  {title:'Software Engineer (Mid Level)',company:'Andela',location:'Nairobi, Kenya',type:'Full Time',level:'Mid Level',posted:'15 Jan',logo:null},
-  {title:'Agribusiness Officer',company:'KTDA',location:'Nairobi, Kenya',type:'Full Time',level:'Entry Level',posted:'16 Jan',logo:null},
-  {title:'Legal Intern',company:'Kenya Revenue Authority',location:'Nairobi, K
+  {title:'Software Engineer (Mid Level)',company:'Andela',location:'Nairobi, Kenya',type:'Full Time',level
