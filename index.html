@@ -994,7 +994,7 @@ footer {
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <li><a href="/cdn-cgi/l/email-protection#70131102151502131f1e1e15130446414230171d11191c5e131f1d"><span class="__cf_email__" data-cfemail="92f1f3e0f7f7e0f1fdfcfcf7f1e6a4a3a0d2f5fff3fbfebcf1fdff">[email&#160;protected]</span></a></li>
+        <li><a href="mailto:careerconnect612@gmail.com">careerconnect612@gmail.com</a></li>
         <li><a href="tel:+254112182261">+254 112 182 261</a></li>
         <li><a href="https://wa.me/254112182261">WhatsApp us</a></li>
         <li><a href="#">LinkedIn</a></li>
@@ -1007,7 +1007,7 @@ footer {
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── SCROLL REVEAL ──────────────────────────────────────────
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver((entries) => {
@@ -1115,8 +1115,12 @@ async function fetchJobs() {
   document.getElementById('jobs-loading').style.display='flex';
   document.getElementById('jobs-grid').style.display='none';
   const results=[];
+
   try {
-    const r1 = await fetch('https://remotive.com/api/remote-jobs?limit=40');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4000);
+    const r1 = await fetch('https://remotive.com/api/remote-jobs?limit=40', { signal: controller.signal });
+    clearTimeout(timeout);
     if (r1.ok) {
       const d1 = await r1.json();
       (d1.jobs||[]).filter(j=>isKenya(j.candidate_required_location)).forEach(j=>{
@@ -1124,11 +1128,14 @@ async function fetchJobs() {
       });
     }
   } catch(e){}
-  if (results.length===0) results.push(...fallbackJobs());
-  allJobs=results;
+
+  // Always fall back to curated Kenya jobs if API returns nothing
+  if (results.length === 0) results.push(...fallbackJobs());
+
+  allJobs = results;
   document.getElementById('jobs-loading').style.display='none';
   document.getElementById('jobs-grid').style.display='grid';
-  document.getElementById('jobs-count').textContent=allJobs.length+' vacancies';
+  document.getElementById('jobs-count').textContent = allJobs.length + ' vacancies';
   renderJobs('all');
 }
 
@@ -1181,4 +1188,20 @@ function fallbackJobs(){return[
   {title:'Marketing Associate',company:'Unilever Kenya',location:'Nairobi, Kenya',type:'Full Time',level:'Entry Level',posted:'11 Jan',logo:null},
   {title:'Data Analyst Intern',company:'Cellulant',location:'Nairobi, Kenya',type:'Internship',level:'Internship',posted:'12 Jan',logo:null},
   {title:'HR Graduate Trainee',company:'NCBA Bank',location:'Nairobi, Kenya',type:'Full Time',level:'Graduate Trainee',posted:'14 Jan',logo:null},
-  {title:'Software Engineer (Mid Level)',company:'Andela',location:'Nairobi, Kenya',type:'Full Time',level
+  {title:'Software Engineer (Mid Level)',company:'Andela',location:'Nairobi, Kenya',type:'Full Time',level:'Mid Level',posted:'15 Jan',logo:null},
+  {title:'Agribusiness Officer',company:'KTDA',location:'Nairobi, Kenya',type:'Full Time',level:'Entry Level',posted:'16 Jan',logo:null},
+  {title:'Legal Intern',company:'Kenya Revenue Authority',location:'Nairobi, Kenya',type:'Internship',level:'Internship',posted:'17 Jan',logo:null},
+  {title:'Procurement Officer',company:'Nation Media Group',location:'Nairobi, Kenya',type:'Full Time',level:'Entry Level',posted:'18 Jan',logo:null},
+  {title:'Full Stack Developer',company:'Twiga Foods',location:'Nairobi, Kenya',type:'Full Time',level:'Mid Level',posted:'19 Jan',logo:null},
+];}
+
+const jobsSection = document.getElementById('jobs');
+if (jobsSection) {
+  const jo = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) { fetchJobs(); jo.disconnect(); }
+  }, { threshold: 0.1 });
+  jo.observe(jobsSection);
+}
+</script>
+</body>
+</html>
